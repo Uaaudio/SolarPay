@@ -1,0 +1,29 @@
+{
+  "name": "solarpay",
+  "version": "1.0.0",
+  "description": "Solar Tropical Pay é um sistema SaaS para automação de pagamentos e gestão financeira do condomínio **Solar Tropical**.  \r O objetivo é facilitar o pagamento das taxas condominiais pelos moradores e permitir que a administração do condomínio gerencie cobranças, pendências e relatórios de forma simples, segura e automatizada.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Uaaudio/SolarPay.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Uaaudio/SolarPay/issues"
+  },
+  "homepage": "https://github.com/Uaaudio/SolarPay#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.2",
+    "express": "^5.2.1",
+    "mysql2": "^3.16.1",
+    "nodemon": "^3.1.11",
+    "sequelize": "^6.37.7"
+  }
+}

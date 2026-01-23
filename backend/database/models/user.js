@@ -1,26 +1,53 @@
-const Sequelize = require("sequelize")
-const connection = require("../../config/connection")
+const Sequelize = require("sequelize");
+const connection = require("../../config/connection");
 
-//improtando model da casa.
-const House = require("./house")
+// importando model da casa.
+const House = require("./house");
 
+// importando model da taxa mensal.
+const MonthylFee = require("./monthlyfee");
 
-const User = connection.define("users",{
-    UserName:{
-        type: Sequelize.STRING(35),
-        allowNull: false
-    },
-    Password:{
-        type: Sequelize.INTEGER(10),
-        allowNull: false
-    },
-    
+const User = connection.define("users", {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  userName: {
+    type: Sequelize.STRING(35),
+    allowNull: false
+  },
+  userEmail: {
+    type: Sequelize.STRING(255),
+    allowNull: false
+  },
+  userPassword: {
+    type: Sequelize.INTEGER(10),
+    allowNull: false
+  },
+
+  userHouse:{
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0
+  }
+  ,
+  createdAt: {
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW
+  },
+  updatedAt: {
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW
+  }
 });
 
-House.belongsTo(User);
-User.hasMany(House);
+// relacionamentos
 
+User.hasMany(House)
+House.belongsTo(User)
 
-User.sync({force:true}).then(()=>{console.log("Tabela Usar Sincronizada com Sucesso")}).catch(console.error,()=>{console.log("Erro ao sincronizar tabela User")});
+House.hasMany(MonthylFee);
+MonthylFee.belongsTo(House);
 
 module.exports = User;

@@ -2,6 +2,17 @@ const express = require("express")
 const app = express();
 const PORT = 3001
 
+// config body-parser.
+const bodyParser = require("body-parser")
+app.use(bodyParser.urlencoded({extended:true}))
+app.use(express.json())
+
+// configurando Ejs
+
+const path = require("path")
+const ejs = require("ejs");
+app.set("view engine","ejs");
+app.set("views", path.join(__dirname, "../frontend/pages"));
 
 // Importando Conexão com o Database.
 const Connection = require("./config/connection")
@@ -13,18 +24,14 @@ const Connection = require("./config/connection")
         console.log("Error ao conectar o banco"+ error)
     })
 
+//importando rotas.
+const Login = require("./routes/loginRoute")
+const Admin = require("./routes/admin.Route")
 
-// Meus Models.
-const User = require("./database/models/user")
-const House = require("./database/models/house")
-
-
-
-
-app.get("/",(req,res)=>{
-    res.send("Aplicação Roadando")
-})
-
+//usando rotas.
+app.use("/",Login);
+app.use("/login",Login);
+app.use("/admin",Admin)
 
 
 app.listen(PORT,()=>{

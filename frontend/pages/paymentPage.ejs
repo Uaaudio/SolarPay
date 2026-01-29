@@ -1,0 +1,46 @@
+<%- include('../partials/header') %>
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+
+      <div class="text-center mb-4">
+        <h2 class="fw-bold">Pagamento</h2>
+        <p class="text-muted">Escaneie o QR code e depois confirme o pagamento.</p>
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+
+          <!-- Informações da cobrança -->
+          <div class="mb-4">
+            <h5 class="card-title">Cobrança</h5>
+            <p class="card-text">
+              Mês: <strong><%= feeInfo.month %></strong><br>
+              Valor: <strong>R$ 150</strong>
+            </p>
+          </div>
+
+          <!-- QR CODE -->
+          <div class="text-center mb-4">
+            <img src="/img/myqrcode.jpeg" alt="QR Code" class="img-fluid" style="max-width: 300px;">
+
+          </div>
+
+          <!-- Botão confirmar pagamento -->
+          <div class="d-flex justify-content-center">
+            <form method="post" action="/payment/confirm/<%= fee.id %>">
+              <button type="submit" class="btn btn-success">
+                Confirmar pagamento
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

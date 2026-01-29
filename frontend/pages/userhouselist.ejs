@@ -1,0 +1,43 @@
+<%- include('../partials/header') %>
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+
+      <div class="text-center mb-4">
+        <h2 class="fw-bold">
+          Seja bem-vindo, <span class="text-primary"><%= user.userName %></span>
+        </h2>
+        <p class="text-muted">Aqui estão seus imóveis cadastrados.</p>
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0 text-center">Meus Imóveis</h4>
+        </div>
+
+        <div class="card-body">
+          <% if (houses && houses.length > 0) { %>
+            <ul class="list-group">
+              <% houses.forEach(house => { %>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span>Apartamento <strong><%= house.number %></strong> </span>
+                  <a href="/home/housedetails/<%= user.id %>/<%= house.id %>" class="btn btn-sm btn-outline-primary">
+                    Ver detalhes
+                  </a>
+                </li>
+              <% }) %>
+            </ul>
+          <% } else { %>
+            <p class="text-center text-muted mb-0">
+              Você ainda não possui imóveis cadastrados.
+            </p>
+          <% } %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <% if(user.admin){ %>
+      <a href="/admin/seedashboard/<%= user.id %>"><button class="btn btn-secondary">Painel do Administrador</button></a>
+    <% } %>
+    <div class="col-md-8">
+
+      <div class="text-center mb-4">
+        <h2 class="fw-bold">
+          Seja bem-vindo, <span class="text-primary"><%= user.userName %></span>
+        </h2>
+        <p class="text-muted">Aqui você gerencia seus imóveis e pagamentos.</p>
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0 text-center">Ações</h4>
+        </div>
+
+        <div class="card-body">
+          <div class="d-flex justify-content-center">
+            <a href="/home/seehouses/<%= user.id%>" class="btn btn-primary btn-lg px-5">
+              Meus Imóveis
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

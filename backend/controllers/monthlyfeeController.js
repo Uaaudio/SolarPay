@@ -1,0 +1,28 @@
+const cron = require("node-cron");
+const MonthylFee = require("../database/models/monthlyfee");
+const Houses = require("../database/models/house");
+
+// Função que gera cobranças
+async function FeeGenerate() {
+
+  // pega todas as casas do banco
+  const houses = await Houses.findAll();
+
+  // cria uma cobrança pra cada casa
+  for (const house of houses) {
+    await MonthylFee.create({
+      month: 1,
+      year: 2026,
+      payed: false,
+      houseId: house.id
+    });
+  }
+}
+
+// Cron (rodar todo dia 1 do mês)
+cron.schedule("0 0 1 * *", FeeGenerate, {
+  timezone: "America/Sao_Paulo",
+});
+
+// exporta para chamar manualmente se quiser
+module.exports = { FeeGenerate };

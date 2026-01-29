@@ -22,16 +22,14 @@ const User = connection.define("users", {
     allowNull: false
   },
   userPassword: {
-    type: Sequelize.INTEGER(10),
+    type: Sequelize.STRING(20),
     allowNull: false
   },
-
-  userHouse:{
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0
-  }
-  ,
+  admin:{
+    type:Sequelize.BOOLEAN,
+    allowNull: true,
+    defaultValue: false
+  },
   createdAt: {
     type: Sequelize.DATE,
     defaultValue: Sequelize.NOW
@@ -41,6 +39,8 @@ const User = connection.define("users", {
     defaultValue: Sequelize.NOW
   }
 });
+
+
 
 // relacionamentos
 

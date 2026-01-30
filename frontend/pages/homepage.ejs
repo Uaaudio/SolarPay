@@ -1,35 +1,54 @@
 <%- include('../partials/header') %>
 
 <div class="container my-5">
-  <div class="row justify-content-center">
-    <% if(user.admin){ %>
-      <a href="/admin/seedashboard/<%= user.id %>"><button class="btn btn-secondary">Painel do Administrador</button></a>
-    <% } %>
+  
+  <!-- Header Section -->
+  <div class="row mb-5 align-items-center">
     <div class="col-md-8">
-
-      <div class="text-center mb-4">
-        <h2 class="fw-bold">
-          Seja bem-vindo, <span class="text-primary"><%= user.userName %></span>
-        </h2>
-        <p class="text-muted">Aqui você gerencia seus imóveis e pagamentos.</p>
-      </div>
-
-      <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-          <h4 class="mb-0 text-center">Ações</h4>
-        </div>
-
-        <div class="card-body">
-          <div class="d-flex justify-content-center">
-            <a href="/home/seehouses/<%= user.id%>" class="btn btn-primary btn-lg px-5">
-              Meus Imóveis
-            </a>
-          </div>
-        </div>
-      </div>
-
+      <h1 class="fw-bold display-6">Olá, <span class="text-primary"><%= user.userName %></span>! 👋</h1>
+      <p class="text-muted lead mb-0">Bem-vindo ao seu painel do morador.</p>
+    </div>
+    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+      <% if(user.admin){ %>
+        <a href="/admin/seedashboard/<%= user.id %>" class="btn btn-dark shadow-sm">
+          <i class="bi bi-speedometer2 me-2"></i>Painel Admin
+        </a>
+      <% } %>
     </div>
   </div>
+
+  <!-- Action Cards -->
+  <div class="row justify-content-center g-4">
+    
+    <div class="col-md-6 col-lg-5">
+      <div class="card h-100 shadow-sm border-0 hover-shadow transition-card">
+        <div class="card-body text-center p-5">
+          <div class="mb-4">
+            <div class="icon-circle bg-primary bg-opacity-10 text-primary mx-auto d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; border-radius: 50%;">
+              <i class="bi bi-houses fs-1"></i>
+            </div>
+          </div>
+          <h3 class="card-title fw-bold">Meus Imóveis</h3>
+          <p class="card-text text-muted mb-4">Visualize seus apartamentos, consulte faturas pendentes e histórico de pagamentos.</p>
+          <a href="/home/seehouses/<%= user.id%>" class="btn btn-primary btn-lg px-5 rounded-pill">
+            Acessar Imóveis
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
+
+<style>
+  .hover-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    transition: all 0.3s ease;
+  }
+  .transition-card {
+    transition: all 0.3s ease;
+  }
+</style>
 
 <%- include('../partials/footer') %>

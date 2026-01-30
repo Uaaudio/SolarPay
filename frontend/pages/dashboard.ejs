@@ -1,172 +1,202 @@
 <%- include('../partials/header') %>
 
-<div class="container my-5">
+<div class="container-fluid my-4 px-4">
 
   <!-- TÍTULO -->
-  <div class="text-center mb-5">
-    <h2 class="fw-bold">Dashboard do Administrador</h2>
-    <p class="text-muted">Visão geral do sistema e ações administrativas</p>
-    <a href="/home/<%= userloged %>"><button class="btn btn-dark">Home</button></a>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-dark">Painel Administrativo</h2>
+    <div>
+      <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#createUserModal"><i class="bi bi-person-plus"></i> Novo Usuário</button>
+      <button class="btn btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#createHouseModal"><i class="bi bi-house-add"></i> Nova Casa</button>
+      <a href="/home/<%= userloged %>" class="btn btn-dark">Ir para Home</a>
+    </div>
   </div>
 
-  <!-- RESUMO DO SISTEMA -->
-  <div class="row g-4 mb-5">
+  <!-- ABAS DE NAVEGAÇÃO -->
+  <ul class="nav nav-tabs mb-4" id="adminTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab">Visão Geral</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab">Gerenciar Usuários</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="houses-tab" data-bs-toggle="tab" data-bs-target="#houses" type="button" role="tab">Gerenciar Casas</button>
+    </li>
+  </ul>
 
-    <!-- Usuários -->
-    <div class="col-md-3 col-sm-6">
-      <div class="card shadow-sm h-100 text-center">
-        <div class="card-body">
-          <i class="bi bi-people fs-1 text-primary mb-2"></i>
-          <h6 class="text-muted">Usuários cadastrados</h6>
-          <h2 class="fw-bold text-primary">
-            <%= userCounter %>
-          </h2>
-        </div>
-      </div>
-    </div>
+  <div class="tab-content" id="adminTabsContent">
 
-    <!-- Casas -->
-    <div class="col-md-3 col-sm-6">
-      <div class="card shadow-sm h-100 text-center">
-        <div class="card-body">
-          <i class="bi bi-house-door fs-1 text-secondary mb-2"></i>
-          <h6 class="text-muted">Casas cadastradas</h6>
-          <h2 class="fw-bold text-secondary">
-            <%= houseCounter %>
-          </h2>
-        </div>
-      </div>
-    </div>
-
-    <!-- Contas em aberto -->
-    <div class="col-md-3 col-sm-6">
-      <div class="card shadow-sm h-100">
-        <div class="card-body text-center">
-          <i class="bi bi-exclamation-circle fs-1 text-danger mb-2"></i>
-          <h6 class="text-muted">Contas em aberto</h6>
-
-          <% if (pendingFees.length === 0) { %>
-            <p class="text-muted mb-0">Nenhuma 🎉</p>
-          <% } else { %>
-            <ul class="list-group list-group-flush mt-2">
-              <% pendingFees.forEach(function(fee){ %>
-                <li class="list-group-item px-0">
-                  Casa <strong>#<%= fee.houseId %></strong> —
-                  Mês <strong><%= fee.month %></strong>
-                </li>
-              <% }) %>
-            </ul>
-          <% } %>
-
-        </div>
-      </div>
-    </div>
-
-    <!-- Contas pagas -->
-    <div class="col-md-3 col-sm-6">
-      <div class="card shadow-sm h-100 text-center">
-        <div class="card-body">
-          <i class="bi bi-check-circle fs-1 text-success mb-2"></i>
-          <h6 class="text-muted">Contas pagas</h6>
-
-          <% if (payedFees.length === 0) { %>
-            <p class="text-muted mb-0">Nenhuma</p>
-          <% } else { %>
-            <ul class="list-group list-group-flush mt-2">
-              <% payedFees.forEach(function(payedFee){ %>
-                <li class="list-group-item px-0">
-                  Casa <strong>#<%= payedFee.houseId %></strong> —
-                  Mês <strong><%= payedFee.month %></strong>
-                </li>
-              <% }) %>
-            </ul>
-          <% } %>
-
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- AÇÕES ADMIN -->
-  <div class="card shadow-sm">
-    <div class="card-header bg-dark text-white text-center">
-      <h4 class="mb-0">Ações Administrativas</h4>
-    </div>
-
-    <div class="card-body">
-      <div class="row g-4 justify-content-center">
-
-        <!-- Criar Usuário -->
-        <div class="col-md-4">
-          <div class="card h-100 text-center border-primary">
-            <div class="card-body">
-              <i class="bi bi-person-plus fs-1 text-primary mb-3"></i>
-              <h5 class="card-title">Criar Usuário</h5>
-              <p class="text-muted">Cadastrar um novo morador no sistema</p>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">
-                Novo Usuário
-              </button>
+    <!-- ABA: VISÃO GERAL -->
+    <div class="tab-pane fade show active" id="overview" role="tabpanel">
+      <div class="row g-4">
+        <!-- Cards de Estatísticas -->
+        <div class="col-md-3">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-body text-center">
+              <i class="bi bi-people fs-1 text-primary mb-2"></i>
+              <h6 class="text-muted">Usuários</h6>
+              <h2 class="fw-bold"><%= userCounter %></h2>
             </div>
           </div>
         </div>
-
-        <!-- Criar Casa -->
-        <div class="col-md-4">
-          <div class="card h-100 text-center border-secondary">
-            <div class="card-body">
-              <i class="bi bi-house-add fs-1 text-secondary mb-3"></i>
-              <h5 class="card-title">Criar Casa</h5>
-              <p class="text-muted">Cadastrar um novo apartamento/casa</p>
-              <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createHouseModal">
-                Nova Casa
-              </button>
+        <div class="col-md-3">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-body text-center">
+              <i class="bi bi-house-door fs-1 text-secondary mb-2"></i>
+              <h6 class="text-muted">Casas</h6>
+              <h2 class="fw-bold"><%= houseCounter %></h2>
             </div>
           </div>
         </div>
-
+        <div class="col-md-3">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-body text-center">
+              <i class="bi bi-exclamation-circle fs-1 text-danger mb-2"></i>
+              <h6 class="text-muted">Pendências</h6>
+              <h2 class="fw-bold text-danger"><%= pendingFees.length %></h2>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-body text-center">
+              <i class="bi bi-check-circle fs-1 text-success mb-2"></i>
+              <h6 class="text-muted">Pagas</h6>
+              <h2 class="fw-bold text-success"><%= payedFees.length %></h2>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
+    <!-- ABA: GERENCIAR USUÁRIOS -->
+    <div class="tab-pane fade" id="users" role="tabpanel">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Lista de Usuários</h5>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th>Email</th>
+                  <th>Admin</th>
+                  <th class="text-end">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% users.forEach(function(user){ %>
+                  <tr>
+                    <td><%= user.id %></td>
+                    <td><%= user.userName %></td>
+                    <td><%= user.userEmail %></td>
+                    <td><%= user.admin ? 'Sim' : 'Não' %></td>
+                    <td class="text-end">
+                      <!-- Botão Editar -->
+                      <button class="btn btn-sm btn-outline-primary me-1" 
+                              data-bs-toggle="modal" 
+                              data-bs-target="#editUserModal"
+                              data-id="<%= user.id %>"
+                              data-name="<%= user.userName %>"
+                              data-email="<%= user.userEmail %>">
+                        <i class="bi bi-pencil"></i>
+                      </button>
+                      <!-- Form Deletar -->
+                      <form action="/admin/deleteuser/<%= user.id %>" method="POST" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir este usuário?');">
+                        <input type="hidden" name="adminId" value="<%= userloged %>">
+                        <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                      </form>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA: GERENCIAR CASAS -->
+    <div class="tab-pane fade" id="houses" role="tabpanel">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Lista de Casas</h5>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>ID</th>
+                  <th>Número / AP</th>
+                  <th>Proprietário</th>
+                  <th class="text-end">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% houses.forEach(function(house){ %>
+                  <% const owner = users.find(u => u.id === house.userId) %>
+                  <tr>
+                    <td><%= house.id %></td>
+                    <td><%= house.number %></td>
+                    <td><%= owner ? owner.userName : 'Desconhecido' %></td>
+                    <td class="text-end">
+                      <!-- Botão Editar -->
+                      <button class="btn btn-sm btn-outline-primary me-1" 
+                              data-bs-toggle="modal" 
+                              data-bs-target="#editHouseModal"
+                              data-id="<%= house.id %>"
+                              data-number="<%= house.number %>"
+                              data-owner="<%= house.userId %>">
+                        <i class="bi bi-pencil"></i>
+                      </button>
+                      <!-- Form Deletar -->
+                      <form action="/admin/deletehouse/<%= userloged %>" method="POST" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir esta casa?');">
+                        <input type="hidden" name="houseNumber" value="<%= house.id %>">
+                        <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                      </form>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <!-- MODAL: CRIAR USUÁRIO -->
 <div class="modal fade" id="createUserModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-
       <div class="modal-header">
         <h5 class="modal-title">Criar Usuário</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-
       <form method="post" action="/admin/createuser">
+        <input type="hidden" name="adminId" value="<%= userloged %>">
         <div class="modal-body">
-
           <div class="mb-3">
             <label class="form-label">Nome</label>
             <input type="text" name="userName" class="form-control" required>
           </div>
-
           <div class="mb-3">
             <label class="form-label">Email</label>
             <input type="email" name="userEmail" class="form-control" required>
           </div>
-
           <div class="mb-3">
             <label class="form-label">Senha</label>
             <input type="password" name="userPassword" class="form-control" required>
           </div>
-
         </div>
-
         <div class="modal-footer">
           <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           <button type="submit" class="btn btn-primary">Criar Usuário</button>
         </div>
       </form>
-
     </div>
   </div>
 </div>
@@ -175,20 +205,17 @@
 <div class="modal fade" id="createHouseModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-
       <div class="modal-header">
         <h5 class="modal-title">Criar Casa</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-
-      <form method="post" action="/admin/createhouse">
+      <form method="post" action="/admin/createhouse/<%= userloged %>">
+        <input type="hidden" name="adminId" value="<%= userloged %>">
         <div class="modal-body">
-
           <div class="mb-3">
             <label class="form-label">Número da Casa / AP</label>
             <input type="number" name="houseNumber" class="form-control" required>
           </div>
-
           <div class="mb-3">
             <label class="form-label">Usuário Responsável</label>
             <select name="houseWonner" class="form-select" required>
@@ -198,17 +225,117 @@
               <% }) %>
             </select>
           </div>
-
         </div>
-
         <div class="modal-footer">
           <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           <button type="submit" class="btn btn-success">Criar Casa</button>
         </div>
       </form>
-
     </div>
   </div>
 </div>
+
+<!-- MODAL: EDITAR USUÁRIO -->
+<div class="modal fade" id="editUserModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Usuário</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form id="editUserForm" method="post" action="">
+        <input type="hidden" name="adminId" value="<%= userloged %>">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Nome</label>
+            <input type="text" name="userName" id="editUserName" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" name="userEmail" id="editUserEmail" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nova Senha (opcional)</label>
+            <input type="password" name="userPassword" class="form-control" placeholder="Deixe em branco para manter">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: EDITAR CASA -->
+<div class="modal fade" id="editHouseModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Casa</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form method="post" action="/admin/edithouse/<%= userloged %>">
+        <input type="hidden" name="adminId" value="<%= userloged %>">
+        <input type="hidden" name="houseId" id="editHouseId">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Número da Casa / AP</label>
+            <input type="number" name="houseNumber" id="editHouseNumber" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Usuário Responsável</label>
+            <select name="houseWonner" id="editHouseOwner" class="form-select" required>
+              <% users.forEach(function(user){ %>
+                <option value="<%= user.id %>"><%= user.userName %></option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Script para preencher o Modal de Editar Usuário
+  const editUserModal = document.getElementById('editUserModal')
+  editUserModal.addEventListener('show.bs.modal', event => {
+    const button = event.relatedTarget
+    const id = button.getAttribute('data-id')
+    const name = button.getAttribute('data-name')
+    const email = button.getAttribute('data-email')
+
+    const modalForm = editUserModal.querySelector('#editUserForm')
+    const modalName = editUserModal.querySelector('#editUserName')
+    const modalEmail = editUserModal.querySelector('#editUserEmail')
+
+    modalForm.action = `/admin/edituser/${id}`
+    modalName.value = name
+    modalEmail.value = email
+  })
+
+  // Script para preencher o Modal de Editar Casa
+  const editHouseModal = document.getElementById('editHouseModal')
+  editHouseModal.addEventListener('show.bs.modal', event => {
+    const button = event.relatedTarget
+    const id = button.getAttribute('data-id')
+    const number = button.getAttribute('data-number')
+    const owner = button.getAttribute('data-owner')
+
+    const modalId = editHouseModal.querySelector('#editHouseId')
+    const modalNumber = editHouseModal.querySelector('#editHouseNumber')
+    const modalOwner = editHouseModal.querySelector('#editHouseOwner')
+
+    modalId.value = id
+    modalNumber.value = number
+    modalOwner.value = owner
+  })
+</script>
 
 <%- include('../partials/footer') %>

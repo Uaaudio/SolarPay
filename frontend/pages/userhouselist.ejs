@@ -4,36 +4,42 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
 
-      <div class="text-center mb-4">
-        <h2 class="fw-bold">
-          Seja bem-vindo, <span class="text-primary"><%= user.userName %></span>
-        </h2>
-        <p class="text-muted">Aqui estão seus imóveis cadastrados.</p>
+      <div class="text-center mb-5">
+        <h2 class="fw-bold text-dark">Meus Imóveis</h2>
+        <p class="text-muted">Gerencie as unidades vinculadas ao seu perfil</p>
       </div>
 
-      <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-          <h4 class="mb-0 text-center">Meus Imóveis</h4>
-        </div>
-
-        <div class="card-body">
-          <% if (houses && houses.length > 0) { %>
-            <ul class="list-group">
-              <% houses.forEach(house => { %>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <span>Apartamento <strong><%= house.number %></strong> </span>
-                  <a href="/home/housedetails/<%= user.id %>/<%= house.id %>" class="btn btn-sm btn-outline-primary">
-                    Ver detalhes
+      <% if (houses && houses.length > 0) { %>
+        <div class="row g-4">
+          <% houses.forEach(house => { %>
+            <div class="col-md-6">
+              <div class="card shadow-sm h-100 border-0">
+                <div class="card-body text-center p-4">
+                  <div class="mb-3">
+                    <i class="bi bi-building fs-1 text-primary"></i>
+                  </div>
+                  <h5 class="card-title fw-bold">Apartamento <%= house.number %></h5>
+                  <p class="text-muted small">Residencial Solar Tropical</p>
+                  <a href="/home/housedetails/<%= user.id %>/<%= house.id %>" class="btn btn-outline-primary w-100 mt-2">
+                    <i class="bi bi-receipt"></i> Ver Faturas
                   </a>
-                </li>
-              <% }) %>
-            </ul>
-          <% } else { %>
-            <p class="text-center text-muted mb-0">
-              Você ainda não possui imóveis cadastrados.
-            </p>
-          <% } %>
+                </div>
+              </div>
+            </div>
+          <% }) %>
         </div>
+      <% } else { %>
+        <div class="text-center py-5">
+          <i class="bi bi-house-slash fs-1 text-muted mb-3"></i>
+          <h4 class="text-muted">Nenhum imóvel encontrado</h4>
+          <p class="text-muted">Entre em contato com a administração para vincular sua unidade.</p>
+        </div>
+      <% } %>
+
+      <div class="text-center mt-5">
+        <a href="/home/<%= user.id %>" class="btn btn-link text-decoration-none text-muted">
+          <i class="bi bi-arrow-left"></i> Voltar para o Início
+        </a>
       </div>
 
     </div>

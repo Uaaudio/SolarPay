@@ -1,25 +1,25 @@
 const User = require("../database/models/user");
 
-async function DoLogin(req,res){
+async function doLogin(req,res){
 
   const login = req.body.userLogin // Constante para pegar o login do User (através do name)
   const password = req.body.userPassword // Constante para pegar a senha do User (através do name)
 
-  const usuario = await User.findOne({ // Faz uma busca no banco para encontrar o User correspondente pelo Email.
+  const user = await User.findOne({ // Faz uma busca no banco para encontrar o User correspondente pelo Email.
     where:{userEmail:login}
   })
 
-  if(usuario!= null){ // Se o usuario não for nulo ele entra.
+  if(user!= null){ // Se o usuario não for nulo ele entra.
     
-    if(password == usuario.userPassword){ // Veifica se a senha está correta de fato.
+    if(password == user.userPassword){ // Veifica se a senha está correta de fato.
       
-      if(usuario.admin == true){ // Verifica se o usuario é admin
+      if(user.admin == true){ // Verifica se o usuario é admin
         
-        return res.redirect("/admin/seedashboard/"+usuario.id) // Se for admin ele manda pro dasboard.
+        return res.redirect("/admin/seedashboard/"+user.id) // Se for admin ele manda pro dasboard.
       
       }else{
 
-        return res.redirect("/home/"+usuario.id) // Retorna a pagina inicial da aplicação
+        return res.redirect("/home/"+user.id) // Retorna a pagina inicial da aplicação
                                                 // Pegar o Id do User.
       }
 
@@ -37,4 +37,4 @@ async function DoLogin(req,res){
 
 }
 
-module.exports = { DoLogin };
+module.exports = { doLogin };

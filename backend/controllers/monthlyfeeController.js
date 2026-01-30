@@ -5,14 +5,18 @@ const Houses = require("../database/models/house");
 // Função que gera cobranças
 async function FeeGenerate() {
 
+  const Today = new Date();
+  const Month = Today.getMonth() + 1;
+  const Year = Today.getFullYear();
+
   // pega todas as casas do banco
   const houses = await Houses.findAll();
 
   // cria uma cobrança pra cada casa
   for (const house of houses) {
     await MonthylFee.create({
-      month: 1,
-      year: 2026,
+      month: Month,
+      year: Year,
       payed: false,
       houseId: house.id
     });

@@ -1,10 +1,10 @@
 // Models.
 const User = require("../database/models/user")
 const House = require("../database/models/house")
-const MonthylFee = require("../database/models/monthlyfee");
+const MonthlyFee = require("../database/models/monthlyfee");
 const { where } = require("sequelize");
 
-async function CreateUser(req, res) {
+async function createUser(req, res) {
 
   const userName = req.body.userName;
   const userEmail = req.body.userEmail;
@@ -23,20 +23,21 @@ async function CreateUser(req, res) {
       });
   
       console.log("User criado com sucesso!", user.userName);
-      return res.redirect("/");
+      return res.redirect("/admin/seedashboard/" + req.body.adminId);
     } catch (error) {
       console.log("Erro ao criar usuario.", error);
       return res.status(500).send("Erro ao criar usuário");
     }
 
   }else{
-    alert("Confira os campos")
+    console.log("Confira os campos");
+    return res.redirect("/admin/seedashboard/" + req.body.adminId);
   }
 
 
   }
 
-async function CreateHouse(req,res){
+async function createHouse(req,res){
 
     const adminId = req.params.id
 
@@ -54,27 +55,27 @@ async function CreateHouse(req,res){
   
         return res.redirect("/admin/seedashboard/"+adminId);
     }catch{
-        console.send("Erro ao criar a casa");
+        console.log("Erro ao criar a casa");
         return res.redirect("/admin/seedashboard/"+adminId);
     }    
-
+  } else {
+    return res.redirect("/admin/seedashboard/"+adminId);
   }
 
 }
 
-async function DeleteHouse(req,res) {
-
+async function deleteHouse(req,res) {
 
   const userId = req.params.id
 
   const houseId = req.body.houseNumber;
-  const OwnerId = req.body.houseWonner;
+  const ownerId = req.body.houseWonner;
 
-  const HouseToDelete = await House.findOne({where:{id:houseId}});
+  const houseToDelete = await House.findOne({where:{id:houseId}});
 
 
 
-  if (houseNumber == HouseToDelete.id ){
+  if (houseToDelete && houseId == houseToDelete.id ){
 
     await House.destroy({where:{id:houseId}});
     
@@ -88,73 +89,72 @@ async function DeleteHouse(req,res) {
   }
 };
 
-async function EditHouse(req,res){
+async function editHouse(req,res){
 
+  const adminId = req.params.id; // ID do admin para redirecionamento
   const houseId = req.body.houseId;
 
   const houseNumber = req.body.houseNumber;
-  const HouseWonner = req.body.houseWonner;
+  const houseOwner = req.body.houseWonner;
 
-  if (houseNumber != null){
+  if (houseNumber != null && houseOwner != null){
     try{
 
-        await House.update({
-      number:houseNumber,
-      userId: HouseWonner
+      await House.update({ 
+      number:houseNumber, // Campos a serem alterados.
+      userId: houseOwner // Campos a serem alterados.
     },{
 
       where:{
-        id:houseId
+        id:houseId // Campo de busca.
       }
     }
 
     );
 
-    return res.redirect("/admin/seedashboard/1");
+    return res.redirect("/admin/seedashboard/" + adminId);
     }catch{
       console.log("Erro ao atualizar casa.")
 
-      return res.redirect("/admin/seedashboard/1");
+      return res.redirect("/admin/seedashboard/" + adminId);
     }
 
   }else{
     console.log("Campo Number vazio")
-    return res.redirect("/admin/seedashboard/1");
+    return res.redirect("/admin/seedashboard/" + adminId);
   }
-
-  
-
-  
 
 };
 
 
 
-async function DeleteUser(req,res) {
+async function deleteUser(req,res) {
   
-  const UserId = req.params.id
+  const userId = req.params.id
+  const adminId = req.body.adminId;
 
-  if(UserId != undefined  || UserId != NaN ){
+  if(userId != undefined && !isNaN(userId) ){
 
     await User.destroy({
-      where:{id:UserId}
+      where:{id:userId}
     })
-    res.send("Sucesso ao apagar Usuário!")
+    return res.redirect("/admin/seedashboard/" + adminId);
   }else{
     res.send("Id inválido")
   };
 
 }
 
-async function EditUser(req,res){
+async function editUser(req,res){
 
   const id = req.params.id // pega id do user pelo params
+  const adminId = req.body.adminId;
 
   let userName = req.body.userName
   let userEmail = req.body.userEmail
   let userPassword = req.body.userPassword
 
-  const userData = User.findOne({where:{id:id}})
+  const userData = await User.findOne({where:{id:id}})
 
   if (userName == "" || userName == undefined){
     userName = userData.userName
@@ -179,35 +179,31 @@ async function EditUser(req,res){
       where: {id:id}
     })
 
-    return res.send("Usuario Atualizado")
+    return res.redirect("/admin/seedashboard/" + adminId);
 
   }catch{
     return res.send("User não atualizado")
   }
 
-
-  
-
-
-  
 }
 
-async function SeeDashboard(req,res){
+async function seeDashboard(req,res){
 
-  const userloged = req.params.id
+  const userLogged = req.params.id
   const houseCounter = await House.count();
   const userCounter = await User.count();
-  const pendingFees= await MonthylFee.findAll({where:{payed:false}});
-  const payedFees= await MonthylFee.findAll({where:{payed:true}});
+  const pendingFees= await MonthlyFee.findAll({where:{payed:false}});
+  const payedFees= await MonthlyFee.findAll({where:{payed:true}});
+  const houses = await House.findAll(); // Busca todas as casas para listar
 
   User.findAll()
     .then((users)=>{
       
-      return res.render("dashboard",{userloged,users,userCounter,houseCounter,payedFees,pendingFees});
+      return res.render("dashboard",{userloged: userLogged,users,houses,userCounter,houseCounter,payedFees,pendingFees});
 
   });
   
 };
 
 
-module.exports = {CreateUser,CreateHouse,DeleteUser,EditUser,SeeDashboard,DeleteHouse,EditHouse};
+module.exports = {createUser,createHouse,deleteUser,editUser,seeDashboard,deleteHouse,editHouse};

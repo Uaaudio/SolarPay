@@ -2,40 +2,44 @@
 
 <div class="container my-5">
   <div class="row justify-content-center">
-    <div class="col-md-8">
+    <div class="col-md-6 col-lg-5">
 
-      <div class="text-center mb-4">
-        <h2 class="fw-bold">Pagamento</h2>
-        <p class="text-muted">Escaneie o QR code e depois confirme o pagamento.</p>
-      </div>
+      <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-header bg-success text-white text-center py-3">
+          <h4 class="mb-0 fw-bold"><i class="bi bi-qr-code-scan me-2"></i>Pagamento via Pix</h4>
+        </div>
 
-      <div class="card shadow-sm">
-        <div class="card-body">
-
-          <!-- Informações da cobrança -->
+        <div class="card-body p-4 text-center">
+          
           <div class="mb-4">
-            <h5 class="card-title">Cobrança</h5>
-            <p class="card-text">
-              Mês: <strong><%= feeInfo.month %></strong><br>
-              Valor: <strong>R$ 150</strong>
-            </p>
+            <p class="text-muted mb-1">Referente ao mês de</p>
+            <h3 class="fw-bold text-dark"><%= feeInfo.month %>/<%= feeInfo.year %></h3>
+            <span class="badge bg-light text-dark border mt-2">Apartamento <%= feeInfo.House ? feeInfo.House.number : 'N/A' %></span>
           </div>
 
-          <!-- QR CODE -->
-          <div class="text-center mb-4">
-            <img src="/img/myqrcode.jpeg" alt="QR Code" class="img-fluid" style="max-width: 300px;">
-
+          <div class="bg-light p-3 rounded mb-4 border d-inline-block">
+            <img src="/img/myqrcode.jpeg" alt="QR Code Pix" class="img-fluid" style="max-width: 200px; height: auto;">
           </div>
 
-          <!-- Botão confirmar pagamento -->
-          <div class="d-flex justify-content-center">
-            <form method="post" action="/payment/confirm/<%= fee.id %>">
-              <button type="submit" class="btn btn-success">
-                Confirmar pagamento
+          <div class="mb-4">
+            <p class="text-muted mb-0">Valor a pagar</p>
+            <h2 class="text-success fw-bold">R$ 150,00</h2>
+          </div>
+
+          <div class="d-grid gap-2">
+            <form method="post" action="/payment/confirm/<%= fee %>">
+              <button type="submit" class="btn btn-success btn-lg w-100 shadow-sm">
+                <i class="bi bi-check-circle-fill me-2"></i>Confirmar Pagamento
               </button>
             </form>
+            <a href="/home/housedetails/<%= UserId %>/<%= feeInfo.houseId %>" class="btn btn-outline-secondary">
+              Cancelar
+            </a>
           </div>
 
+        </div>
+        <div class="card-footer text-center bg-light text-muted small py-3">
+          Após o pagamento, clique em confirmar para baixar a pendência.
         </div>
       </div>
 

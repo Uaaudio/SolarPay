@@ -27,6 +27,9 @@ const Connection = require("./config/connection")
     })
 
 
+
+//Connection.sync({force:true});
+
 //importando rotas.
 const Login = require("./routes/loginRoute")
 const Admin = require("./routes/admin.Route")

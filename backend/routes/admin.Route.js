@@ -1,21 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const {CreateUser,CreateHouse,DeleteUser,EditUser,SeeDashboard,DeleteHouse, EditHouse} = require("../controllers/adminController");
+const {createUser,createHouse,deleteUser,editUser,seeDashboard,deleteHouse,editHouse} = require("../controllers/adminController");
 
-router.use("/createuser",CreateUser);
-router.use("/createhouse",CreateHouse);
-router.use("/deleteuser/:id",DeleteUser);
-router.use("/edituser/:id",EditUser);
-router.use("/seedashboard/:id",SeeDashboard);
-router.delete("/deletehouse/:id",DeleteHouse);
-router.put("/edithouse/:id",EditHouse);
+router.post("/createuser",createUser);
+router.post("/createhouse/:id",createHouse); // :id é o adminId
+router.post("/deleteuser/:id",deleteUser); // :id é o userId
+router.post("/edituser/:id",editUser); // :id é o userId
+router.use("/seedashboard/:id",seeDashboard);
+router.post("/deletehouse/:id",deleteHouse); // :id é o adminId
+router.post("/edithouse/:id",editHouse); // :id é o adminId
 
 
 module.exports = router;
-
-
-
-
-
-
-

@@ -1,21 +1,22 @@
 <%- include("../partials/header") %>
 <div class="container d-flex align-items-center justify-content-center" style="min-height: 80vh;">
-    <div class="card shadow" style="width: 100%; max-width: 400px;">
-        <div class="card-header bg-primary text-white text-center">
-            <h3 class="mb-0">Login</h3>
-        </div>
+    <div class="card" style="width: 100%; max-width: 400px;">
         <div class="card-body p-4">
+            <div class="text-center mb-4 p-3 rounded" style="background-color: var(--sand-beige);">
+                <h1>Login</h1>
+                <p class="text-muted">Acesse o painel SolarPay</p>
+            </div>
             <form method="POST" action="/login/dologin">
                 <div class="mb-3">
                     <label for="userLogin" class="form-label">Email / Login</label>
-                    <input type="text" class="form-control" id="userLogin" name="userLogin" placeholder="Insira seu Login" required>
+                    <input type="text" class="form-control" id="userLogin" name="userLogin" placeholder="seu@email.com" required>
                 </div>
                 <div class="mb-3">
                     <label for="userPassword" class="form-label">Senha</label>
-                    <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="Insira sua Senha" required>
+                    <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="••••••••" required>
                 </div>
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-success btn-lg">Entrar</button>
+                    <button type="submit" class="btn">Entrar</button>
                 </div>
             </form>
         </div>

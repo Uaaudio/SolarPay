@@ -5,12 +5,12 @@
   <!-- Header Section -->
   <div class="row mb-5 align-items-center">
     <div class="col-md-8">
-      <h1 class="fw-bold display-6">Olá, <span class="text-primary"><%= user.userName %></span>! 👋</h1>
+      <h1 class="fw-bold display-6">Olá, <span><%= user.userName %></span>! 👋</h1>
       <p class="text-muted lead mb-0">Bem-vindo ao seu painel do morador.</p>
     </div>
     <div class="col-md-4 text-md-end mt-3 mt-md-0">
       <% if(user.admin){ %>
-        <a href="/admin/seedashboard/<%= user.id %>" class="btn btn-dark shadow-sm">
+        <a href="/admin/seedashboard/<%= user.id %>" class="btn-secondary-theme">
           <i class="bi bi-speedometer2 me-2"></i>Painel Admin
         </a>
       <% } %>
@@ -21,16 +21,16 @@
   <div class="row justify-content-center g-4">
     
     <div class="col-md-6 col-lg-5">
-      <div class="card h-100 shadow-sm border-0 hover-shadow transition-card">
+      <div class="card h-100">
         <div class="card-body text-center p-5">
           <div class="mb-4">
-            <div class="icon-circle bg-primary bg-opacity-10 text-primary mx-auto d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; border-radius: 50%;">
-              <i class="bi bi-houses fs-1"></i>
+            <div class="icon-circle mx-auto d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background-color: var(--sand-beige); border-radius: 50%; border: 2px dashed var(--solar-orange);">
+              <i class="bi bi-houses fs-1 icon-warning"></i>
             </div>
           </div>
           <h3 class="card-title fw-bold">Meus Imóveis</h3>
           <p class="card-text text-muted mb-4">Visualize seus apartamentos, consulte faturas pendentes e histórico de pagamentos.</p>
-          <a href="/home/seehouses/<%= user.id%>" class="btn btn-primary btn-lg px-5 rounded-pill">
+          <a href="/home/seehouses/<%= user.id%>" class="btn">
             Acessar Imóveis
           </a>
         </div>
@@ -39,16 +39,5 @@
 
   </div>
 </div>
-
-<style>
-  .hover-shadow:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
-    transition: all 0.3s ease;
-  }
-  .transition-card {
-    transition: all 0.3s ease;
-  }
-</style>
 
 <%- include('../partials/footer') %>

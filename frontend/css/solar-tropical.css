@@ -1,0 +1,111 @@
+/* Tema Solar Tropical - Paleta Quente (Cinza, Amarelo, Laranja) */
+:root {
+    --solar-orange: #FF9800;       /* Laranja Vibrante */
+    --solar-yellow: #FFC107;       /* Amarelo Ouro */
+    --sand-beige: #FFE0B2;         /* Laranja Pêssego (Destaques) */
+    --body-bg: #F5F5F5;            /* Cinza Claro (Fundo da página) */
+    --card-bg: #FFF8E1;            /* Creme/Amarelo Pálido (Fundo dos cards) */
+    --text-dark: #3E2723;          /* Marrom Café (Texto) */
+    --tropical-green: #4CAF50;     /* Verde (Sucesso/Ações) */
+    --white: #ffffff;
+}
+
+body {
+    background-color: var(--body-bg);
+    color: var(--text-dark);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--solar-orange);
+}
+
+/* Cards */
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--solar-orange);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* Buttons */
+.btn {
+    border-radius: 50px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary, button[type="submit"]:not(.btn-outline-danger) {
+    background: linear-gradient(135deg, var(--solar-orange), var(--solar-yellow));
+    border: none;
+    color: var(--text-dark);
+}
+
+.btn-primary:hover, button[type="submit"]:not(.btn-outline-danger):hover {
+    background: linear-gradient(135deg, var(--solar-yellow), var(--solar-orange));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
+    color: var(--text-dark);
+}
+
+.btn-secondary-theme {
+    background-color: transparent;
+    border: 2px solid var(--solar-orange);
+    color: var(--solar-orange);
+    border-radius: 50px;
+    padding: 8px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    transition: all 0.3s;
+}
+
+.btn-secondary-theme:hover {
+    background-color: var(--solar-orange);
+    color: var(--white);
+}
+
+/* Forms */
+.form-control, .form-select {
+    background-color: var(--white);
+    border: 1px solid #ddd;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--solar-orange);
+    box-shadow: 0 0 0 0.25rem rgba(255, 152, 0, 0.25);
+}
+
+/* Tables */
+.table {
+    background-color: var(--card-bg);
+    color: var(--text-dark);
+}
+
+.table thead {
+    background-color: var(--sand-beige);
+    color: var(--text-dark);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(255, 152, 0, 0.1);
+}
+
+/* Utilities */
+.text-muted {
+    color: #6D4C41 !important; /* Marrom claro */
+}
+
+/* Modals */
+.modal-content {
+    background-color: var(--card-bg);
+    border: 2px solid var(--solar-orange);
+}
+.modal-header {
+    background-color: var(--solar-orange);
+    color: var(--white);
+}
+.modal-footer {
+    background-color: var(--sand-beige);
+}

@@ -12,11 +12,11 @@
     </a>
   </div>
 
-  <div class="card shadow-sm border-0">
+  <div class="card">
     <div class="card-body p-0">
       <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">
-          <thead class="bg-light">
+          <thead>
             <tr>
               <th class="ps-4 py-3">Apartamento</th>
               <th class="py-3">Referência</th>
@@ -53,18 +53,18 @@
                 </td>
                 <td>
                   <% if(fee.payed) { %>
-                    <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill">
+                    <span class="badge status-paid px-3 py-2 rounded-pill">
                       <i class="bi bi-check-circle-fill me-1"></i> Pago
                     </span>
                   <% } else { %>
-                    <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill">
+                    <span class="badge status-pending px-3 py-2 rounded-pill">
                       <i class="bi bi-clock-history me-1"></i> Pendente
                     </span>
                   <% } %>
                 </td>
                 <td class="text-end pe-4">
                   <% if(!fee.payed) { %>
-                    <a href="/payment/<%= user.id %>/<%= fee.id %>" class="btn btn-primary btn-sm px-3 shadow-sm">
+                    <a href="/payment/<%= user.id %>/<%= fee.id %>" class="btn btn-sm px-3">
                       Pagar <i class="bi bi-chevron-right ms-1"></i>
                     </a>
                   <% } else { %>

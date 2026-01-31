@@ -6,9 +6,9 @@
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="fw-bold text-dark">Painel Administrativo</h2>
     <div>
-      <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#createUserModal"><i class="bi bi-person-plus"></i> Novo Usuário</button>
-      <button class="btn btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#createHouseModal"><i class="bi bi-house-add"></i> Nova Casa</button>
-      <a href="/home/<%= userloged %>" class="btn btn-dark">Ir para Home</a>
+      <button class="btn me-2" data-bs-toggle="modal" data-bs-target="#createUserModal"><i class="bi bi-person-plus"></i> Novo Usuário</button>
+      <button class="btn me-2" data-bs-toggle="modal" data-bs-target="#createHouseModal"><i class="bi bi-house-add"></i> Nova Casa</button>
+      <a href="/home/<%= userloged %>" class="btn-secondary-theme">Ir para Home</a>
     </div>
   </div>
 
@@ -32,38 +32,38 @@
       <div class="row g-4">
         <!-- Cards de Estatísticas -->
         <div class="col-md-3">
-          <div class="card shadow-sm border-0 h-100">
+          <div class="card h-100" style="background-color: var(--sand-beige);">
             <div class="card-body text-center">
-              <i class="bi bi-people fs-1 text-primary mb-2"></i>
+              <i class="bi bi-people fs-1 icon-primary mb-2"></i>
               <h6 class="text-muted">Usuários</h6>
               <h2 class="fw-bold"><%= userCounter %></h2>
             </div>
           </div>
         </div>
         <div class="col-md-3">
-          <div class="card shadow-sm border-0 h-100">
+          <div class="card h-100" style="background-color: var(--sand-beige);">
             <div class="card-body text-center">
-              <i class="bi bi-house-door fs-1 text-secondary mb-2"></i>
+              <i class="bi bi-house-door fs-1 icon-secondary mb-2"></i>
               <h6 class="text-muted">Casas</h6>
               <h2 class="fw-bold"><%= houseCounter %></h2>
             </div>
           </div>
         </div>
         <div class="col-md-3">
-          <div class="card shadow-sm border-0 h-100">
+          <div class="card h-100" style="background-color: var(--sand-beige);">
             <div class="card-body text-center">
-              <i class="bi bi-exclamation-circle fs-1 text-danger mb-2"></i>
+              <i class="bi bi-exclamation-circle fs-1 icon-warning mb-2"></i>
               <h6 class="text-muted">Pendências</h6>
-              <h2 class="fw-bold text-danger"><%= pendingFees.length %></h2>
+              <h2 class="fw-bold" style="color: var(--solar-orange);"><%= pendingFees.length %></h2>
             </div>
           </div>
         </div>
         <div class="col-md-3">
-          <div class="card shadow-sm border-0 h-100">
+          <div class="card h-100" style="background-color: var(--sand-beige);">
             <div class="card-body text-center">
-              <i class="bi bi-check-circle fs-1 text-success mb-2"></i>
+              <i class="bi bi-check-circle fs-1 icon-secondary mb-2"></i>
               <h6 class="text-muted">Pagas</h6>
-              <h2 class="fw-bold text-success"><%= payedFees.length %></h2>
+              <h2 class="fw-bold" style="color: var(--tropical-green);"><%= payedFees.length %></h2>
             </div>
           </div>
         </div>
@@ -72,12 +72,12 @@
 
     <!-- ABA: GERENCIAR USUÁRIOS -->
     <div class="tab-pane fade" id="users" role="tabpanel">
-      <div class="card shadow-sm border-0">
+      <div class="card">
         <div class="card-body">
           <h5 class="card-title mb-3">Lista de Usuários</h5>
           <div class="table-responsive">
             <table class="table table-hover align-middle">
-              <thead class="table-light">
+              <thead>
                 <tr>
                   <th>ID</th>
                   <th>Nome</th>
@@ -120,12 +120,12 @@
 
     <!-- ABA: GERENCIAR CASAS -->
     <div class="tab-pane fade" id="houses" role="tabpanel">
-      <div class="card shadow-sm border-0">
+      <div class="card">
         <div class="card-body">
           <h5 class="card-title mb-3">Lista de Casas</h5>
           <div class="table-responsive">
             <table class="table table-hover align-middle">
-              <thead class="table-light">
+              <thead>
                 <tr>
                   <th>ID</th>
                   <th>Número / AP</th>
@@ -193,8 +193,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Criar Usuário</button>
+          <button type="button" class="btn-secondary-theme" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn">Criar Usuário</button>
         </div>
       </form>
     </div>
@@ -227,8 +227,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-success">Criar Casa</button>
+          <button type="button" class="btn-secondary-theme" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn">Criar Casa</button>
         </div>
       </form>
     </div>
@@ -260,8 +260,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+          <button type="button" class="btn-secondary-theme" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn">Salvar Alterações</button>
         </div>
       </form>
     </div>
@@ -294,8 +294,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+          <button type="button" class="btn-secondary-theme" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn">Salvar Alterações</button>
         </div>
       </form>
     </div>
